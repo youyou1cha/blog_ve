@@ -1,0 +1,17 @@
+[project]
+name = "blog_ve"
+version = "0.1.0"
+description = "blog_dv"
+authors = [
+    {name = "nemo", email = "60929499+youyou1cha@users.noreply.github.com"},
+]
+dependencies = [
+    "django>=5.0.6",
+]
+requires-python = ">=3.12"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
