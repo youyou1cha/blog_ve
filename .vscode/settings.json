@@ -1,0 +1,6 @@
+{
+    "editor.formatOnPaste": false,
+    "editor.fontWeight": "normal",
+    "python.analysis.diagnosticSeverityOverrides": {},
+    "editor.defaultFoldingRangeProvider": null
+}
