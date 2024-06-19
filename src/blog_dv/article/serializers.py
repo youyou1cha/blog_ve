@@ -1,10 +1,11 @@
 from rest_framework import serializers
-from ..common.serializers import CommentSerializer
+from common.serializers import CommentSerializer
 from .models import Article, Avater, Category, Tag
-from ..user_info.serializers import UserDescSerializer
+from user_info.serializers import UserDescSerializer
 
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):
+
     @staticmethod
     def check_tag_obj_exist(validated_data):
         text = validated_data.get('text')
@@ -45,9 +46,10 @@ class ArticleBaseSerializer(serializers.HyperlinkedModelSerializer):
     author = UserDescSerializer(read_only=True)
     # category
     category = CategorySerializer(read_only=True)
-    tags = serializers.SlugRelatedField(
-        queryset=Tag.objects.all(), many=True, required=False, slug_field="text"
-    )
+    tags = serializers.SlugRelatedField(queryset=Tag.objects.all(),
+                                        many=True,
+                                        required=False,
+                                        slug_field="text")
 
     def to_internal_value(self, data):
         tags_data = data.get("tags")
@@ -57,29 +59,33 @@ class ArticleBaseSerializer(serializers.HyperlinkedModelSerializer):
                     Tag.objects.create(text=text)
         return super().to_internal_value(data)
 
-    category_id = serializers.IntegerField(
-        write_only=True, allow_null=True, required=False
-    )
+    category_id = serializers.IntegerField(write_only=True,
+                                           allow_null=True,
+                                           required=False)
 
     @staticmethod
     def validate_category_id(value):
-        if not Category.objects.filter(id=value).exists() and value is not None:
-            raise serializers.ValidationError(f"Category with id {value} not exists")
+        if not Category.objects.filter(
+                id=value).exists() and value is not None:
+            raise serializers.ValidationError(
+                f"Category with id {value} not exists")
         return value
 
     avator = AvaterSerializer(read_only=True)
-    avator_id = serializers.IntegerField(
-        write_only=True, allow_null=True, required=False
-    )
+    avator_id = serializers.IntegerField(write_only=True,
+                                         allow_null=True,
+                                         required=False)
 
     @staticmethod
     def validate_avator_id(value):
         if not Avater.objects.filter(id=value).exists and value is not None:
-            raise serializers.ValidationError(f"Avator with id {value} not exists")
+            raise serializers.ValidationError(
+                f"Avator with id {value} not exists")
         return value
 
 
 class ArticleSerializer(ArticleBaseSerializer):
+
     class Meta:
         model = Article
         fields = "__all__"
